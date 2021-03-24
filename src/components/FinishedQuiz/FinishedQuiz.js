@@ -3,6 +3,13 @@ import styles from "./FinishedQuiz.module.css";
 
 const FinishedQuiz = (props) => {
   console.log(props);
+  const successCount = Object.keys(props.results).reduce((total, key) => {
+    if (props.results[key] === "success") {
+      total++;
+    }
+    return total;
+  }, 0);
+
   return (
     <div className={styles.FinishedQuiz}>
       <ul>
@@ -23,7 +30,9 @@ const FinishedQuiz = (props) => {
           );
         })}
       </ul>
-      <p>Rigth 4 from 15</p>
+      <p>
+        Rigth {successCount} from {props.quiz.length}
+      </p>
       <div>
         <button>Repeat</button>
       </div>

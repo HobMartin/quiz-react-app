@@ -48,8 +48,8 @@ function Quiz() {
     const result = results;
     console.log(result[answerId]);
     if (question.rightAnswerId === answerId) {
-      if (!result[answerId]) {
-        result[answerId] = "success";
+      if (!result[question.id]) {
+        result[question.id] = "success";
       }
       setResults(result);
       setAnswerState({ [answerId]: "success" });
@@ -64,7 +64,7 @@ function Quiz() {
         window.clearTimeout(timeout);
       }, 1000);
     } else {
-      result[answerId] = "error";
+      result[question.id] = "error";
       setAnswerState({ [answerId]: "error" });
       setResults(result);
     }
