@@ -1,8 +1,8 @@
 import React from "react";
-
+import styles from "./Layout.module.css";
 function Layout(props) {
   return (
-    <div>
+    <div className={styles.Layout}>
       <main>{props.children}</main>
     </div>
   );
