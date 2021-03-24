@@ -46,7 +46,7 @@ function Quiz() {
 
     const question = quiz[activeQuestion];
     const result = results;
-    console.log(answerId);
+    console.log(result[answerId]);
     if (question.rightAnswerId === answerId) {
       if (!result[answerId]) {
         result[answerId] = "success";

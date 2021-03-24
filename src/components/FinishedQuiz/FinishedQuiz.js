@@ -8,7 +8,7 @@ const FinishedQuiz = (props) => {
       <ul>
         {props.quiz.map((quizItem, index) => {
           console.log(quizItem.id);
-          console.log(props.results[quizItem.id]);
+          console.log(props.results);
           const classes = [
             "fa",
             props.results[quizItem.id] === "error" ? "fa-times" : "fa-check",
