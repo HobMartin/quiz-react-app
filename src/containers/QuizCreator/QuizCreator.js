@@ -3,7 +3,7 @@ import styles from "./QuizCreator.module.css";
 import Button from "../../components/UI/Button/Button";
 import Select from "../../components/UI/Select/Select";
 import Input from "../../components/UI/Input/Input";
-import axios from "axios";
+import axios from "../../axios/axios-quiz";
 import {
   createControl,
   validate,
@@ -20,10 +20,7 @@ const QuizCreator = () => {
     event.preventDefault();
 
     try {
-      await axios.post(
-        "https://react-quiz-66995-default-rtdb.europe-west1.firebasedatabase.app/quizes.json",
-        quiz
-      );
+      await axios.post("/quizes.json", quiz);
       setQuiz([]);
       setFormControls(createFormsControls());
       setIsFormValid(false);

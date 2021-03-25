@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./QuizList.module.css";
-import axios from "axios";
+import axios from "../../axios/axios-quiz";
 import Loader from "../../components/UI/Loader/Loader";
 
 const QuizList = () => {
@@ -21,9 +21,7 @@ const QuizList = () => {
   useEffect(() => {
     async function getQuizList() {
       try {
-        const response = await axios.get(
-          "https://react-quiz-66995-default-rtdb.europe-west1.firebasedatabase.app/quizes.json"
-        );
+        const response = await axios.get("/quizes.json");
         const quizes = [];
         Object.keys(response.data).forEach((key, index) => {
           quizes.push({
