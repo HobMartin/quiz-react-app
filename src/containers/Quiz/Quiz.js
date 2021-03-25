@@ -4,9 +4,6 @@ import ActiveQuiz from "../../components/ActiveQuiz/ActiveQuiz";
 import FinishedQuiz from "../../components/FinishedQuiz/FinishedQuiz";
 
 function Quiz() {
-  //   state = {
-  //     quiz: [],
-  //   };
   const [quiz] = useState([
     {
       question: "Що таке осінь?",
@@ -74,13 +71,19 @@ function Quiz() {
     return activeQuestion + 1 === quiz.length;
   };
 
+  const retryHandler = () => {
+    setActiveQuestion(0);
+    setAnswerState(null);
+    setIsFinish(false);
+    setResults({});
+  };
   return (
     <div className={styles.Quiz}>
       <div className={styles.QuizWrapper}>
         <h1>Дайте відповіді на запитання</h1>
 
         {isFinish ? (
-          <FinishedQuiz results={results} quiz={quiz} />
+          <FinishedQuiz results={results} quiz={quiz} onRetry={retryHandler} />
         ) : (
           <ActiveQuiz
             answers={quiz[activeQuestion].answers}
