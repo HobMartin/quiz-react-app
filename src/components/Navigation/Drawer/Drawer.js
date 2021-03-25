@@ -23,7 +23,7 @@ function Drawer(props) {
       <nav className={classes.join(" ")}>
         <ul>{renderLinks()}</ul>
       </nav>
-      {props.isOpen ? <Backdrop onClick={props.onClose} /> : null}
+      {props.isOpen ? <Backdrop onClose={props.onClose} /> : null}
     </>
   );
 }
