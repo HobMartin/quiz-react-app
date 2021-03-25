@@ -3,6 +3,7 @@ import styles from "./QuizCreator.module.css";
 import Button from "../../components/UI/Button/Button";
 import Select from "../../components/UI/Select/Select";
 import Input from "../../components/UI/Input/Input";
+import axios from "axios";
 import {
   createControl,
   validate,
@@ -10,12 +11,26 @@ import {
 } from "../../form/formFramework";
 
 const QuizCreator = () => {
+  const [quiz, setQuiz] = useState([]);
   const submitHandler = (event) => {
     event.preventDefault();
   };
 
-  const createQuizHandler = (event) => {
+  const createQuizHandler = async (event) => {
     event.preventDefault();
+
+    try {
+      await axios.post(
+        "https://react-quiz-66995-default-rtdb.europe-west1.firebasedatabase.app/quizes.json",
+        quiz
+      );
+      setQuiz([]);
+      setFormControls(createFormsControls());
+      setIsFormValid(false);
+      setRightAnswerId(1);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const createOptionControll = (number) => {
@@ -47,8 +62,8 @@ const QuizCreator = () => {
 
   const addQuestionHandler = (event) => {
     event.preventDefault();
-
-    const quizCopy = quiz.concat();
+    //quizCopy
+    let quizCopy = [...quiz];
     const index = quizCopy.length + 1;
 
     const { question, option1, option2, option3, option4 } = formControls;
@@ -66,14 +81,14 @@ const QuizCreator = () => {
     };
     quizCopy.push(questionItem);
 
-    setQuiz({ quizCopy });
+    setQuiz(quizCopy);
+    setFormControls(createFormsControls());
     setIsFormValid(false);
     setRightAnswerId(1);
-    setFormControls(createFormsControls());
   };
   const [rightAnswerId, setRightAnswerId] = useState(1);
   const [isFormValid, setIsFormValid] = useState(false);
-  const [quiz, setQuiz] = useState([]);
+
   const [formControls, setFormControls] = useState(createFormsControls());
 
   const changeHandler = (value, controlName) => {
