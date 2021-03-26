@@ -4,7 +4,6 @@ import Buttom from "../UI/Button/Button";
 import { Link } from "react-router-dom";
 
 const FinishedQuiz = (props) => {
-  console.log(props);
   const successCount = Object.keys(props.results).reduce((total, key) => {
     if (props.results[key] === "success") {
       total++;
@@ -16,8 +15,6 @@ const FinishedQuiz = (props) => {
     <div className={styles.FinishedQuiz}>
       <ul>
         {props.quiz.map((quizItem, index) => {
-          console.log(quizItem.id);
-          console.log(props.results);
           const classes = [
             "fa",
             props.results[quizItem.id] === "error" ? "fa-times" : "fa-check",
