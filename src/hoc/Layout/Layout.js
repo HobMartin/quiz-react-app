@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styles from "./Layout.module.css";
 import MenuToggle from "../../components/Navigation/MenuToggle/MenuToggle";
 import Drawer from "../../components/Navigation/Drawer/Drawer";
+import { useSelector } from "react-redux";
 
 function Layout(props) {
+  const isAuthenticated = useSelector((state) => !!state.auth.isAuthenticated);
   const [menu, setMenu] = useState(false);
 
   const toggleMenuHandler = () => {
@@ -14,7 +16,11 @@ function Layout(props) {
   };
   return (
     <div className={styles.Layout}>
-      <Drawer isOpen={menu} onClose={menuCloseHandler} />
+      <Drawer
+        isOpen={menu}
+        onClose={menuCloseHandler}
+        isAuthenticated={isAuthenticated}
+      />
       <MenuToggle onToggle={toggleMenuHandler} isOpen={menu} />
       <main>{props.children}</main>
     </div>
