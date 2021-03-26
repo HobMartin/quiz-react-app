@@ -3,31 +3,30 @@ import styles from "./QuizCreator.module.css";
 import Button from "../../components/UI/Button/Button";
 import Select from "../../components/UI/Select/Select";
 import Input from "../../components/UI/Input/Input";
-import axios from "../../axios/axios-quiz";
+import { useSelector, useDispatch } from "react-redux";
 import {
   createControl,
   validate,
   validateForm,
 } from "../../form/formFramework";
+import {
+  createQuizQuestion,
+  finishCreateQuiz,
+} from "../../store/actions/create";
 
 const QuizCreator = () => {
-  const [quiz, setQuiz] = useState([]);
+  const quiz = useSelector((state) => state.create.quiz);
+  const dispatch = useDispatch();
   const submitHandler = (event) => {
     event.preventDefault();
   };
 
-  const createQuizHandler = async (event) => {
+  const createQuizHandler = (event) => {
     event.preventDefault();
-
-    try {
-      await axios.post("/quizes.json", quiz);
-      setQuiz([]);
-      setFormControls(createFormsControls());
-      setIsFormValid(false);
-      setRightAnswerId(1);
-    } catch (err) {
-      console.log(err);
-    }
+    setFormControls(createFormsControls());
+    setIsFormValid(false);
+    setRightAnswerId(1);
+    dispatch(finishCreateQuiz());
   };
 
   const createOptionControll = (number) => {
@@ -59,15 +58,12 @@ const QuizCreator = () => {
 
   const addQuestionHandler = (event) => {
     event.preventDefault();
-    //quizCopy
-    let quizCopy = [...quiz];
-    const index = quizCopy.length + 1;
 
     const { question, option1, option2, option3, option4 } = formControls;
 
     const questionItem = {
       question: question.value,
-      id: index,
+      id: quiz.length + 1,
       rightAnswerId: rightAnswerId,
       answers: [
         { text: option1.value, id: option1.id },
@@ -76,16 +72,13 @@ const QuizCreator = () => {
         { text: option4.value, id: option4.id },
       ],
     };
-    quizCopy.push(questionItem);
-
-    setQuiz(quizCopy);
+    dispatch(createQuizQuestion(questionItem));
     setFormControls(createFormsControls());
     setIsFormValid(false);
     setRightAnswerId(1);
   };
   const [rightAnswerId, setRightAnswerId] = useState(1);
   const [isFormValid, setIsFormValid] = useState(false);
-
   const [formControls, setFormControls] = useState(createFormsControls());
 
   const changeHandler = (value, controlName) => {

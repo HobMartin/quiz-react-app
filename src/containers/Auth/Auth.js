@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import styles from "./Auth.module.css";
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
-import axios from "axios";
+// import axios from "axios";
+import { useDispatch } from "react-redux";
+import { auth } from "../../store/actions/auth";
 
 function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -10,6 +12,8 @@ function validateEmail(email) {
 }
 
 function Auth(props) {
+  const dispatch = useDispatch();
+
   const [formValid, setFromValid] = useState(false);
   const [formsControls, setFormControls] = useState({
     email: {
@@ -38,38 +42,16 @@ function Auth(props) {
     },
   });
 
-  const loginHandler = async () => {
-    const authData = {
-      email: formsControls.email.value,
-      password: formsControls.passwords.value,
-      returnSecureToken: true,
-    };
-    try {
-      const response = await axios.post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCwgmgtVbZcKooZWFpo8SPVNN5t2hzRAKQ",
-        authData
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const loginHandler = () => {
+    dispatch(
+      auth(formsControls.email.value, formsControls.passwords.value, true)
+    );
   };
 
-  const signupHandler = async () => {
-    const authData = {
-      email: formsControls.email.value,
-      password: formsControls.passwords.value,
-      returnSecureToken: true,
-    };
-    try {
-      const response = await axios.post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCwgmgtVbZcKooZWFpo8SPVNN5t2hzRAKQ",
-        authData
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const signupHandler = () => {
+    dispatch(
+      auth(formsControls.email.value, formsControls.passwords.value, false)
+    );
   };
 
   const submitHandler = (e) => {
