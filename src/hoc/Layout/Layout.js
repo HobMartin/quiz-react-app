@@ -5,7 +5,7 @@ import Drawer from "../../components/Navigation/Drawer/Drawer";
 import { useSelector } from "react-redux";
 
 function Layout(props) {
-  const isAuthenticated = useSelector((state) => !!state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state) => !!state.auth.token);
   const [menu, setMenu] = useState(false);
 
   const toggleMenuHandler = () => {

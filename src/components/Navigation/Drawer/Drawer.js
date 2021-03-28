@@ -36,11 +36,8 @@ function Drawer(props) {
     classes.push(styles.close);
   }
 
-  const links = [
-    { to: "/", label: "Список", exec: true },
-    { to: "/auth", label: "Авторизування", exec: false },
-    { to: "/quiz-creator", label: "Створити тест", exec: false },
-  ];
+  console.log("draw", props.isAuthenticated);
+  const links = [{ to: "/", label: "Список", exec: true }];
 
   if (props.isAuthenticated) {
     links.push({ to: "/quiz-creator", label: "Створити тест", exec: false });
